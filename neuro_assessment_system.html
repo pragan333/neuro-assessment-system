@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURO-DIAGNOSTIC SYSTEM v2.1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2c3e50;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            min-height: 100vh;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            margin: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, #3498db, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .nav-tab {
+            background: white;
+            border: 2px solid #3498db;
+            color: #3498db;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .nav-tab:hover, .nav-tab.active {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .patient-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            margin: 20px 0;
+        }
+        
+        label {
+            display: block;
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        input[type="text"], input[type="number"], input[type="date"], 
+        input[type="datetime-local"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ecf0f1;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #3498db;
+            background: rgba(52, 152, 219, 0.1);
+        }
+        
+        .checkbox-item input[type="checkbox"], .checkbox-item input[type="radio"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+            width: auto;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .score-display {
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.3);
+        }
+        
+        .voice-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .voice-btn {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            min-width: 45px;
+            height: 45px;
+        }
+        
+        .voice-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+        }
+        
+        .voice-btn.recording {
+            background: linear-gradient(45deg, #27ae60, #2ecc71);
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .voice-status {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .status-online {
+            background: #d5f5d5;
+            color: #27ae60;
+        }
+        
+        .status-connected {
+            background: #d4edff;
+            color: #3498db;
+        }
+        
+        .warning {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+        
+        .info-card {
+            background: rgba(52, 152, 219, 0.1);
+            border-left: 5px solid #3498db;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 NEURO-DIAGNOSTIC SYSTEM v2.1</h1>
+            <p>Advanced Neurological Assessment Platform</p>
+            <div style="margin-top: 15px;">
+                <span class="status-indicator status-online">System Online</span>
+                <span class="status-indicator status-connected">Database Connected</span>
+                <span class="status-indicator status-online">AI Assistant Active</span>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showSection('home')">🏠 Home</div>
+            <div class="nav-tab" onclick="showSection('patient')">👤 Patient Registration</div>
+            <div class="nav-tab" onclick="showSection('fnd')">🔍 FND Assessment</div>
+            <div class="nav-tab" onclick="showSection('epilepsy')">⚡ Epilepsy</div>
+            <div class="nav-tab" onclick="showSection('ms')">🧬 Multiple Sclerosis</div>
+            <div class="nav-tab" onclick="showSection('parkinson')">🤝 Parkinson's</div>
+            <div class="nav-tab" onclick="showSection('stroke')">🚨 Stroke</div>
+        </div>
+
+        <!-- Home Section -->
+        <div id="home" class="section active">
+            <div class="patient-form">
+                <h2>🎯 Diagnostic Modules Available</h2>
+                <div class="info-card">
+                    <h3>🔍 Functional Neurological Disorder (FND)</h3>
+                    <p>Comprehensive assessment with Tamil voice input support, functional signs evaluation, and diagnostic confidence scoring.</p>
+                </div>
+                <div class="info-card">
+                    <h3>⚡ Epilepsy/Seizure Disorders</h3>
+                    <p>ILAE classification system with EEG analysis and seizure characterization protocols.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🧬 Multiple Sclerosis Assessment</h3>
+                    <p>McDonald criteria implementation with MRI analysis and CSF evaluation protocols.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤝 Parkinson's Disease</h3>
+                    <p>UPDRS scoring system with motor assessment and levodopa response evaluation.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🚨 Stroke/CVD Emergency</h3>
+                    <p>NIHSS calculator with time-critical treatment protocols and emergency assessment.</p>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="showSection('patient')">Start New Assessment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Registration -->
+        <div id="patient" class="section">
+            <div class="patient-form">
+                <h2>👤 Patient Registration</h2>
+                <div class="form-group">
+                    <label>Patient ID:</label>
+                    <input type="text" id="patientId" placeholder="Enter unique patient ID">
+                </div>
+                <div class="form-group">
+                    <label>Full Name:</label>
+                    <input type="text" id="patientName" placeholder="Enter patient full name">
+                </div>
+                <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" id="patientAge" min="1" max="120" placeholder="Enter age">
+                </div>
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <select id="patientGender">
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Assessment Date:</label>
+                    <input type="date" id="assessmentDate">
+                </div>
+                <button class="btn btn-success" onclick="registerPatient()">Register Patient</button>
+                <div id="patient-status"></div>
+            </div>
+        </div>
+
+        <!-- FND Assessment -->
+        <div id="fnd" class="section">
+            <div class="patient-form">
+                <h2>🔍 Functional Neurological Disorder Assessment</h2>
+                <div class="info-card">
+                    🎤 <strong>Tamil Voice Input Available</strong> - Click microphone buttons to speak in Tamil
+                </div>
+                
+                <h3>1. Symptom Presentation</h3>
+                <div class="form-group">
+                    <label>Primary Symptom:</label>
+                    <select id="fnd-primary-symptom">
+                        <option value="">Select primary symptom</option>
+                        <option value="weakness">Motor weakness/paralysis (தசை பலவீனம்)</option>
+                        <option value="seizures">Non-epileptic seizures (வலிப்பு போன்ற நிகழ்வுகள்)</option>
+                        <option value="sensory">Sensory disturbances (உணர்வு கோளாறுகள்)</option>
+                        <option value="gait">Gait abnormalities (நடை கோளாறுகள்)</option>
+                        <option value="speech">Speech/swallowing issues (பேச்சு/விழுங்கல் பிரச்சனைகள்)</option>
+                        <option value="tremor">Functional tremor (நடுக்கம்)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Symptom Description (அறிகுறிகள் விளக்கம்):</label>
+                    <div class="voice-container">
+                        <textarea id="fnd-symptom-description" placeholder="Describe symptoms... / அறிகுறிகளை விளக்கவும்..." rows="3"></textarea>
+                        <button class="voice-btn" onclick="startVoiceInput('fnd-symptom-description')" title="Click to speak in Tamil">🎤</button>
+                    </div>
+                    <div id="fnd-symptom-description-status" class="voice-status"></div>
+                </div>
+
+                <div class="form-group">
+                    <label>Onset Pattern:</label>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="radio" name="fnd-onset" value="sudden" id="fnd-sudden">
+                            <label for="fnd-sudden">Sudden/Acute onset (திடீர் தொடக்கம்)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" name="fnd-onset" value="gradual" id="fnd-gradual">
+                            <label for="fnd-gradual">Gradual onset (படிப்படியான தொடக்கம்)</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="radio" name="fnd-onset" value="following-event" id="fnd-event">
+                            <label for="fnd-event">Following specific event (குறிப்பிட்ட நிகழ்வுக்குப் பின்)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>2. Functional Signs</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hoover-sign" value="hoover">
+                        <label for="hoover-sign">Hoover's Sign (ஹூவர் அறிகுறி)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="give-way" value="giveway">
+                        <label for="give-way">Give-way weakness (விடுபடும் பலவீனம்)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tremor-entrain" value="entrainment">
+                        <label for="tremor-entrain">Tremor entrainment (நடுக்க ஒத்திசைவு)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distractibility" value="distract">
+                        <label for="distractibility">Distractibility (கவனச்சிதறல்)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="non-anatomical" value="nonanat">
+                        <label for="non-anatomical">Non-anatomical sensory loss</label>
+                    </div>
+                </div>
+
+                <h3>3. Clinical Investigations</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="neuro-exam" value="neuroexam">
+                        <label for="neuro-exam">Neurological examination with functional signs</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="video-recording" value="videorecording">
+                        <label for="video-recording">Video recording of symptoms</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="distraction-tests" value="distraction">
+                        <label for="distraction-tests">Distraction/attention tests</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="functional-scales" value="scales">
+                        <label for="functional-scales">Functional assessment scales</label>
+                    </div>
+                </div>
+
+                <h3>4. Neurophysiology</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="routine-eeg-fnd" value="routineeeg">
+                        <label for="routine-eeg-fnd">Routine EEG</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="video-eeg-fnd" value="videoeeg">
+                        <label for="video-eeg-fnd">Video-EEG monitoring (24-48h)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="emg-fnd" value="emg">
+                        <label for="emg-fnd">Electromyography (EMG)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ncs-fnd" value="ncs">
+                        <label for="ncs-fnd">Nerve Conduction Studies</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="evoked-potentials" value="evoked">
+                        <label for="evoked-potentials">Motor Evoked Potentials</label>
+                    </div>
+                </div>
+
+                <h3>5. Neuroimaging</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-brain-fnd" value="mribrain">
+                        <label for="mri-brain-fnd">MRI Brain with/without contrast</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-spine-fnd" value="mrispine">
+                        <label for="mri-spine-fnd">MRI Cervical/Thoracic spine</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ct-head-fnd" value="cthead">
+                        <label for="ct-head-fnd">CT Head (if acute)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pet-scan" value="pet">
+                        <label for="pet-scan">PET/SPECT (research)</label>
+                    </div>
+                </div>
+
+                <h3>6. Laboratory Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cbc-fnd" value="cbc">
+                        <label for="cbc-fnd">Complete Blood Count</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cmp-fnd" value="cmp">
+                        <label for="cmp-fnd">Comprehensive Metabolic Panel</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="thyroid-fnd" value="thyroid">
+                        <label for="thyroid-fnd">Thyroid Function (TSH, T4)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vitamin-b12" value="b12">
+                        <label for="vitamin-b12">Vitamin B12, Folate</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vitamin-d" value="vitd">
+                        <label for="vitamin-d">Vitamin D levels</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="inflammatory" value="inflammatory">
+                        <label for="inflammatory">ESR, CRP</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="autoimmune" value="autoimmune">
+                        <label for="autoimmune">ANA, Anti-phospholipid Ab</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toxicology" value="toxicology">
+                        <label for="toxicology">Toxicology screen</label>
+                    </div>
+                </div>
+
+                <h3>7. Specialized Studies</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lumbar-puncture" value="lp">
+                        <label for="lumbar-puncture">Lumbar puncture (if indicated)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cardiac-tests" value="cardiac">
+                        <label for="cardiac-tests">ECG, Echocardiogram</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sleep-study" value="sleep">
+                        <label for="sleep-study">Sleep study</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="autonomic-testing" value="autonomic">
+                        <label for="autonomic-testing">Autonomic function tests</label>
+                    </div>
+                </div>
+
+                <h3>8. Psychological Assessment</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="psychiatric-interview" value="psych">
+                        <label for="psychiatric-interview">Structured psychiatric interview</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="trauma-screening" value="trauma">
+                        <label for="trauma-screening">Trauma screening (ACE, PC-PTSD-5)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="depression-scale" value="depression">
+                        <label for="depression-scale">Depression scale (PHQ-9)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="anxiety-scale" value="anxiety">
+                        <label for="anxiety-scale">Anxiety scale (GAD-7)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="neuropsych-testing" value="neuropsych">
+                        <label for="neuropsych-testing">Neuropsychological testing</label>
+                    </div>
+                </div>
+
+                <h3>9. Investigation Results</h3>
+                <div class="form-group">
+                    <label>Key Investigation Results:</label>
+                    <textarea id="fnd-investigation-results" placeholder="Enter key investigation findings..." rows="4"></textarea>
+                </div>
+
+                <button class="btn" onclick="calculateFNDScore()">Calculate FND Confidence</button>
+                <div id="fnd-result"></div>
+            </div>
+        </div>
+
+        <!-- Epilepsy Assessment -->
+        <div id="epilepsy" class="section">
+            <div class="patient-form">
+                <h2>⚡ Epilepsy/Seizure Disorder Assessment</h2>
+                
+                <h3>1. Seizure Characteristics</h3>
+                <div class="form-group">
+                    <label>Seizure Type:</label>
+                    <select id="seizure-type">
+                        <option value="">Select seizure type</option>
+                        <option value="focal-aware">Focal aware</option>
+                        <option value="focal-impaired">Focal impaired awareness</option>
+                        <option value="focal-bilateral">Focal to bilateral tonic-clonic</option>
+                        <option value="generalized-tonic-clonic">Generalized tonic-clonic</option>
+                        <option value="absence">Absence</option>
+                        <option value="myoclonic">Myoclonic</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Seizure Frequency (per month):</label>
+                    <input type="number" id="seizure-frequency" min="0" placeholder="Number per month">
+                </div>
+
+                <h3>2. Seizure Features</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="aura" value="aura">
+                        <label for="aura">Aura present</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="automatisms" value="automatisms">
+                        <label for="automatisms">Automatisms</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tongue-bite" value="tonguebite">
+                        <label for="tongue-bite">Tongue biting</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="incontinence" value="incontinence">
+                        <label for="incontinence">Urinary incontinence</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="postictal" value="postictal">
+                        <label for="postictal">Post-ictal confusion</label>
+                    </div>
+                </div>
+
+                <h3>3. Neurophysiology</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="routine-eeg-ep" value="routineeeg">
+                        <label for="routine-eeg-ep">Routine EEG (interictal)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="sleep-eeg" value="sleepeeg">
+                        <label for="sleep-eeg">Sleep-deprived EEG</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="video-eeg-ep" value="videoeeg">
+                        <label for="video-eeg-ep">Video-EEG monitoring (ictal)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ambulatory-eeg" value="ambulatory">
+                        <label for="ambulatory-eeg">Ambulatory EEG</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="depth-electrodes" value="depth">
+                        <label for="depth-electrodes">Depth electrodes (if indicated)</label>
+                    </div>
+                </div>
+
+                <h3>4. Neuroimaging</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-epilepsy-protocol" value="mriepilepsy">
+                        <label for="mri-epilepsy-protocol">MRI Brain (epilepsy protocol)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fmri" value="fmri">
+                        <label for="fmri">Functional MRI</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pet-epilepsy" value="petepilepsy">
+                        <label for="pet-epilepsy">PET scan (interictal)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="spect" value="spect">
+                        <label for="spect">SPECT (ictal/interictal)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="dti" value="dti">
+                        <label for="dti">Diffusion Tensor Imaging</label>
+                    </div>
+                </div>
+
+                <h3>5. Laboratory Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="glucose-epilepsy" value="glucose">
+                        <label for="glucose-epilepsy">Blood glucose, electrolytes</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="prolactin-epilepsy" value="prolactin">
+                        <label for="prolactin-epilepsy">Post-ictal prolactin</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="drug-levels" value="druglevels">
+                        <label for="drug-levels">Antiepileptic drug levels</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="liver-function" value="liver">
+                        <label for="liver-function">Liver function tests</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="autoimmune-epilepsy" value="autoimmuneepilepsy">
+                        <label for="autoimmune-epilepsy">Autoimmune epilepsy panel</label>
+                    </div>
+                </div>
+
+                <h3>6. Genetic Testing</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="epilepsy-gene-panel" value="genepanel">
+                        <label for="epilepsy-gene-panel">Epilepsy gene panel</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="chromosomal-analysis" value="chromosomal">
+                        <label for="chromosomal-analysis">Chromosomal microarray</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="whole-exome" value="wholeexome">
+                        <label for="whole-exome">Whole exome sequencing</label>
+                    </div>
+                </div>
+
+                <h3>7. Investigation Results</h3>
+                <div class="form-group">
+                    <label>EEG Findings:</label>
+                    <textarea id="eeg-findings" placeholder="Describe EEG abnormalities, seizure patterns..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>MRI Findings:</label>
+                    <textarea id="mri-findings-epilepsy" placeholder="Structural abnormalities, hippocampal sclerosis..." rows="3"></textarea>
+                </div>
+
+                <button class="btn" onclick="calculateEpilepsyScore()">Assess Epilepsy Likelihood</button>
+                <div id="epilepsy-result"></div>
+            </div>
+        </div>
+
+        <!-- MS Assessment -->
+        <div id="ms" class="section">
+            <div class="patient-form">
+                <h2>🧬 Multiple Sclerosis Assessment</h2>
+                
+                <h3>1. Clinical Presentation</h3>
+                <div class="form-group">
+                    <label>Disease Course:</label>
+                    <select id="ms-course">
+                        <option value="">Select disease course</option>
+                        <option value="rrms">Relapsing-Remitting MS</option>
+                        <option value="spms">Secondary Progressive MS</option>
+                        <option value="ppms">Primary Progressive MS</option>
+                        <option value="cis">Clinically Isolated Syndrome</option>
+                    </select>
+                </div>
+
+                <h3>2. Clinical Symptoms</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="optic-neuritis" value="opticneuritis">
+                        <label for="optic-neuritis">Optic neuritis</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="brainstem" value="brainstem">
+                        <label for="brainstem">Brainstem symptoms</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="spinal-symptoms" value="spinal">
+                        <label for="spinal-symptoms">Spinal cord symptoms</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cerebellar" value="cerebellar">
+                        <label for="cerebellar">Cerebellar symptoms</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="fatigue" value="fatigue">
+                        <label for="fatigue">Significant fatigue</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cognitive-ms" value="cognitivems">
+                        <label for="cognitive-ms">Cognitive impairment</label>
+                    </div>
+                </div>
+
+                <h3>3. McDonald Criteria - Neuroimaging</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-brain-ms" value="mribrainms">
+                        <label for="mri-brain-ms">MRI Brain with gadolinium</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-cervical" value="mricervical">
+                        <label for="mri-cervical">MRI Cervical spine</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-thoracic" value="mrithoracic">
+                        <label for="mri-thoracic">MRI Thoracic spine</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-orbits" value="mriorbits">
+                        <label for="mri-orbits">MRI Orbits (if optic neuritis)</label>
+                    </div>
+                </div>
+
+                <h3>4. Cerebrospinal Fluid Analysis</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="csf-analysis" value="csf">
+                        <label for="csf-analysis">CSF analysis (cell count, protein)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="oligoclonal-bands" value="ocb">
+                        <label for="oligoclonal-bands">Oligoclonal bands (OCBs)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="igg-index" value="iggindex">
+                        <label for="igg-index">IgG index/synthesis rate</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="csf-cytology" value="csfcytology">
+                        <label for="csf-cytology">CSF cytology</label>
+                    </div>
+                </div>
+
+                <h3>5. Evoked Potentials</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vep" value="vep">
+                        <label for="vep">Visual evoked potentials</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="baer" value="baer">
+                        <label for="baer">Brainstem auditory evoked responses</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ssep" value="ssep">
+                        <label for="ssep">Somatosensory evoked potentials</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mep" value="mep">
+                        <label for="mep">Motor evoked potentials</label>
+                    </div>
+                </div>
+
+                <h3>6. Laboratory Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vitamin-levels-ms" value="vitaminms">
+                        <label for="vitamin-levels-ms">B12, Folate, Vitamin D</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="nmo-antibodies" value="nmo">
+                        <label for="nmo-antibodies">AQP4 antibodies (NMO)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mog-antibodies" value="mog">
+                        <label for="mog-antibodies">MOG antibodies</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lyme-serology" value="lyme">
+                        <label for="lyme-serology">Lyme disease serology</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="syphilis-serology" value="syphilis">
+                        <label for="syphilis-serology">Syphilis serology</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="thyroid-ms" value="thyroidms">
+                        <label for="thyroid-ms">Thyroid function</label>
+                    </div>
+                </div>
+
+                <h3>7. Genetic Testing</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hla-typing" value="hla">
+                        <label for="hla-typing">HLA typing (if familial MS suspected)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ms-gene-panel" value="msgenepanel">
+                        <label for="ms-gene-panel">MS genetic risk factors</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>EDSS Score (if available):</label>
+                    <select id="edss-score">
+                        <option value="">Select EDSS score</option>
+                        <option value="0">0 - Normal neurological exam</option>
+                        <option value="1">1.0 - No disability, minimal signs</option>
+                        <option value="1.5">1.5 - No disability, minimal signs</option>
+                        <option value="2">2.0 - Minimal disability</option>
+                        <option value="2.5">2.5 - Minimal disability</option>
+                        <option value="3">3.0 - Moderate disability</option>
+                        <option value="3.5">3.5 - Moderate disability</option>
+                        <option value="4">4.0 - Significant disability</option>
+                    </select>
+                </div>
+
+                <h3>8. Investigation Results</h3>
+                <div class="form-group">
+                    <label>MRI Lesion Description:</label>
+                    <textarea id="mri-lesions" placeholder="Describe T2 hyperintense lesions, gadolinium enhancement..." rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>CSF Results:</label>
+                    <textarea id="csf-results" placeholder="OCB status, cell count, protein levels..." rows="2"></textarea>
+                </div>
+
+                <button class="btn" onclick="calculateMSScore()">Assess MS Criteria</button>
+                <div id="ms-result"></div>
+            </div>
+        </div>
+
+        <!-- Parkinson Assessment -->
+        <div id="parkinson" class="section">
+            <div class="patient-form">
+                <h2>🤝 Parkinson's Disease Assessment</h2>
+                
+                <h3>1. Cardinal Motor Features</h3>
+                <div class="form-group">
+                    <label>Bradykinesia Severity:</label>
+                    <select id="bradykinesia">
+                        <option value="">Select severity</option>
+                        <option value="0">0 - Normal</option>
+                        <option value="1">1 - Slight slowing</option>
+                        <option value="2">2 - Mild to moderate slowing</option>
+                        <option value="3">3 - Moderate slowing</option>
+                        <option value="4">4 - Severe slowing</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rest-tremor" value="resttremor">
+                        <label for="rest-tremor">Rest tremor (4-6 Hz)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rigidity" value="rigidity">
+                        <label for="rigidity">Rigidity (cogwheel/lead-pipe)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="postural-instability" value="postural">
+                        <label for="postural-instability">Postural instability</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="asymmetric" value="asymmetric">
+                        <label for="asymmetric">Asymmetric onset</label>
+                    </div>
+                </div>
+
+                <h3>2. Non-Motor Symptoms</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hyposmia" value="hyposmia">
+                        <label for="hyposmia">Loss of smell (hyposmia)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="rbd" value="rbd">
+                        <label for="rbd">REM sleep behavior disorder</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="constipation-pd" value="constipation">
+                        <label for="constipation-pd">Constipation</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="depression-pd" value="depression">
+                        <label for="depression-pd">Depression</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="orthostatic" value="orthostatic">
+                        <label for="orthostatic">Orthostatic hypotension</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="impulse-control" value="impulse">
+                        <label for="impulse-control">Impulse control disorders</label>
+                    </div>
+                </div>
+
+                <h3>3. Imaging Studies</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="datscan" value="datscan">
+                        <label for="datscan">DaTscan (dopamine transporter imaging)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-brain-pd" value="mribrainpd">
+                        <label for="mri-brain-pd">MRI Brain (rule out secondary causes)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="pet-dopamine" value="petdopamine">
+                        <label for="pet-dopamine">PET dopamine imaging</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mibg-scan" value="mibg">
+                        <label for="mibg-scan">Cardiac MIBG scintigraphy</label>
+                    </div>
+                </div>
+
+                <h3>4. Functional Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="levodopa-challenge" value="challenge">
+                        <label for="levodopa-challenge">Levodopa challenge test</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="updrs" value="updrs">
+                        <label for="updrs">UPDRS assessment</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="smell-test" value="smell">
+                        <label for="smell-test">Olfactory testing (UPSIT)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="polysomnography" value="polysomnography">
+                        <label for="polysomnography">Sleep study (polysomnography)</label>
+                    </div>
+                </div>
+
+                <h3>5. Laboratory Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ceruloplasmin" value="ceruloplasmin">
+                        <label for="ceruloplasmin">Ceruloplasmin (Wilson's disease)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="copper-levels" value="copper">
+                        <label for="copper-levels">24h urine copper</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="thyroid-pd" value="thyroidpd">
+                        <label for="thyroid-pd">Thyroid function</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vitamin-levels-pd" value="vitaminspd">
+                        <label for="vitamin-levels-pd">Vitamin B12, D levels</label>
+                    </div>
+                </div>
+
+                <h3>6. Genetic Testing</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="parkinson-genes" value="parkinsongenes">
+                        <label for="parkinson-genes">PD gene panel (LRRK2, PARKIN, etc.)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="family-history-analysis" value="familyhistory">
+                        <label for="family-history-analysis">Family history analysis</label>
+                    </div>
+                </div>
+
+                <h3>2. Treatment Response</h3>
+                <div class="form-group">
+                    <label>Levodopa Response:</label>
+                    <select id="levodopa-response">
+                        <option value="">Select response</option>
+                        <option value="excellent">Excellent (>70% improvement)</option>
+                        <option value="good">Good (30-70% improvement)</option>
+                        <option value="poor">Poor (<30% improvement)</option>
+                        <option value="not-tried">Not yet tried</option>
+                    </select>
+                </div>
+
+                <button class="btn" onclick="calculateParkinsonScore()">Assess Parkinson's Likelihood</button>
+                <div id="parkinson-result"></div>
+            </div>
+        </div>
+
+        <!-- Stroke Assessment -->
+        <div id="stroke" class="section">
+            <div class="patient-form">
+                <h2>🚨 Stroke/CVD Emergency Assessment</h2>
+                
+                <h3>1. NIHSS Stroke Scale</h3>
+                <div class="form-group">
+                    <label>Level of Consciousness:</label>
+                    <select id="loc">
+                        <option value="0">0 - Alert, keenly responsive</option>
+                        <option value="1">1 - Not alert, arousable</option>
+                        <option value="2">2 - Requires repeated stimulation</option>
+                        <option value="3">3 - Responds only with reflex</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Best Gaze:</label>
+                    <select id="gaze">
+                        <option value="0">0 - Normal</option>
+                        <option value="1">1 - Partial gaze palsy</option>
+                        <option value="2">2 - Forced deviation</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Facial Palsy:</label>
+                    <select id="facial">
+                        <option value="0">0 - Normal</option>
+                        <option value="1">1 - Minor paralysis</option>
+                        <option value="2">2 - Partial paralysis</option>
+                        <option value="3">3 - Complete paralysis</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Motor Arm (Left):</label>
+                    <select id="motor-arm-left">
+                        <option value="0">0 - No drift</option>
+                        <option value="1">1 - Drift</option>
+                        <option value="2">2 - Some effort against gravity</option>
+                        <option value="3">3 - No effort against gravity</option>
+                        <option value="4">4 - No movement</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Motor Arm (Right):</label>
+                    <select id="motor-arm-right">
+                        <option value="0">0 - No drift</option>
+                        <option value="1">1 - Drift</option>
+                        <option value="2">2 - Some effort against gravity</option>
+                        <option value="3">3 - No effort against gravity</option>
+                        <option value="4">4 - No movement</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Motor Leg (Left):</label>
+                    <select id="motor-leg-left">
+                        <option value="0">0 - No drift</option>
+                        <option value="1">1 - Drift</option>
+                        <option value="2">2 - Some effort against gravity</option>
+                        <option value="3">3 - No effort against gravity</option>
+                        <option value="4">4 - No movement</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Motor Leg (Right):</label>
+                    <select id="motor-leg-right">
+                        <option value="0">0 - No drift</option>
+                        <option value="1">1 - Drift</option>
+                        <option value="2">2 - Some effort against gravity</option>
+                        <option value="3">3 - No effort against gravity</option>
+                        <option value="4">4 - No movement</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Best Language:</label>
+                    <select id="language">
+                        <option value="0">0 - No aphasia, normal</option>
+                        <option value="1">1 - Mild to moderate aphasia</option>
+                        <option value="2">2 - Severe aphasia</option>
+                        <option value="3">3 - Mute, global aphasia</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Dysarthria:</label>
+                    <select id="dysarthria">
+                        <option value="0">0 - Normal</option>
+                        <option value="1">1 - Mild to moderate dysarthria</option>
+                        <option value="2">2 - Severe dysarthria</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Extinction/Inattention:</label>
+                    <select id="extinction">
+                        <option value="0">0 - No abnormality</option>
+                        <option value="1">1 - Visual, tactile, or spatial extinction</option>
+                        <option value="2">2 - Profound hemi-inattention</option>
+                    </select>
+                </div>
+
+                <h3>2. Time Factors</h3>
+                <div class="form-group">
+                    <label>Time of Symptom Onset:</label>
+                    <input type="datetime-local" id="symptom-onset">
+                </div>
+
+                <div class="form-group">
+                    <label>Time of Hospital Arrival:</label>
+                    <input type="datetime-local" id="hospital-arrival">
+                </div>
+
+                <h3>3. Emergency Investigations</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ct-head-stroke" value="cthead">
+                        <label for="ct-head-stroke">Non-contrast CT head</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ct-angio" value="ctangio">
+                        <label for="ct-angio">CT angiography</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ct-perfusion" value="ctperfusion">
+                        <label for="ct-perfusion">CT perfusion</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mri-stroke" value="mristroke">
+                        <label for="mri-stroke">MRI Brain (DWI, FLAIR)</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="mra" value="mra">
+                        <label for="mra">MR angiography</label>
+                    </div>
+                </div>
+
+                <h3>4. Laboratory Tests</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="glucose-stroke" value="glucose">
+                        <label for="glucose-stroke">Blood glucose</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="coagulation-stroke" value="coag">
+                        <label for="coagulation-stroke">PT/INR, aPTT</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="platelet-count" value="platelets">
+                        <label for="platelet-count">Platelet count</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="troponin" value="troponin">
+                        <label for="troponin">Troponin levels</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="lipid-profile" value="lipids">
+                        <label for="lipid-profile">Lipid profile</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="hba1c" value="hba1c">
+                        <label for="hba1c">HbA1c</label>
+                    </div>
+                </div>
+
+                <h3>5. Cardiac Evaluation</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="ecg-stroke" value="ecg">
+                        <label for="ecg-stroke">ECG</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="echo-stroke" value="echo">
+                        <label for="echo-stroke">Echocardiogram</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="holter" value="holter">
+                        <label for="holter">Holter monitoring</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="tee" value="tee">
+                        <label for="tee">Transesophageal echo</label>
+                    </div>
+                </div>
+
+                <h3>6. Vascular Studies</h3>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="carotid-doppler" value="carotid">
+                        <label for="carotid-doppler">Carotid Doppler ultrasound</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transcranial-doppler" value="tcd">
+                        <label for="transcranial-doppler">Transcranial Doppler</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vertebral-doppler" value="vertebral">
+                        <label for="vertebral-doppler">Vertebral artery Doppler</label>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="calculateNIHSS()">Calculate NIHSS Score</button>
+                <div id="stroke-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize
+        document.getElementById('assessmentDate').value = new Date().toISOString().split('T')[0];
+        
+        let currentPatient = {};
+        let recognition = null;
+        let isRecording = false;
+
+        // Initialize Speech Recognition
+        function initializeSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'ta-IN'; // Tamil
+                recognition.continuous = false;
+                recognition.interimResults = true;
+                return true;
+            }
+            return false;
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Activate corresponding tab
+            event.target.classList.add('active');
+        }
+
+        // Patient Registration
+        function registerPatient() {
+            const patientId = document.getElementById('patientId').value;
+            const patientName = document.getElementById('patientName').value;
+            const patientAge = document.getElementById('patientAge').value;
+            const patientGender = document.getElementById('patientGender').value;
+            const assessmentDate = document.getElementById('assessmentDate').value;
+            
+            if (!patientId || !patientName || !patientAge || !patientGender) {
+                alert('Please fill in all required patient information.');
+                return;
+            }
+            
+            currentPatient = {
+                id: patientId,
+                name: patientName,
+                age: patientAge,
+                gender: patientGender,
+                assessmentDate: assessmentDate
+            };
+            
+            document.getElementById('patient-status').innerHTML = `
+                <div class="score-display">
+                    ✅ Patient Registered Successfully!<br>
+                    <strong>${patientName}</strong> (ID: ${patientId})<br>
+                    Age: ${patientAge} | Gender: ${patientGender}
+                </div>
+            `;
+        }
+
+        // Voice Input for Tamil
+        function startVoiceInput(targetId) {
+            if (!recognition) {
+                if (!initializeSpeechRecognition()) {
+                    alert('Speech recognition not supported in this browser.');
+                    return;
+                }
+            }
+
+            const targetElement = document.getElementById(targetId);
+            const statusElement = document.getElementById(targetId + '-status');
+            const voiceBtn = event.target;
+
+            if (isRecording) {
+                recognition.stop();
+                return;
+            }
+
+            isRecording = true;
+            voiceBtn.classList.add('recording');
+            statusElement.textContent = 'Listening in Tamil... (தமிழில் பேசவும்)';
+
+            recognition.onresult = function(event) {
+                let transcript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    transcript += event.results[i][0].transcript;
+                }
+                targetElement.value = transcript;
+                statusElement.textContent = `Recognized: ${transcript}`;
+            };
+
+            recognition.onend = function() {
+                isRecording = false;
+                voiceBtn.classList.remove('recording');
+                statusElement.textContent = 'Voice input completed.';
+            };
+
+            recognition.onerror = function(event) {
+                isRecording = false;
+                voiceBtn.classList.remove('recording');
+                statusElement.textContent = 'Error in voice recognition. Please try again.';
+            };
+
+            recognition.start();
+        }
+
+        // FND Assessment Calculator
+        function calculateFNDScore() {
+            if (!currentPatient.id) {
+                alert('Please register patient first!');
+                return;
+            }
+
+            let score = 0;
+            let details = [];
+            
+            // Check functional signs
+            const functionalSigns = ['hoover-sign', 'give-way', 'tremor-entrain', 'distractibility', 'non-anatomical'];
+            let signsCount = 0;
+            
+            functionalSigns.forEach(sign => {
+                if (document.getElementById(sign).checked) {
+                    signsCount++;
+                    score += 20;
+                }
+            });
+            
+            if (signsCount > 0) {
+                details.push(`${signsCount} positive functional signs detected`);
+            }
+            
+            // Check all investigations
+            const allInvestigations = [
+                'neuro-exam', 'video-recording', 'distraction-tests', 'functional-scales',
+                'routine-eeg-fnd', 'video-eeg-fnd', 'emg-fnd', 'ncs-fnd', 'evoked-potentials',
+                'mri-brain-fnd', 'mri-spine-fnd', 'ct-head-fnd', 'pet-scan',
+                'cbc-fnd', 'cmp-fnd', 'thyroid-fnd', 'vitamin-b12', 'vitamin-d', 'inflammatory', 'autoimmune', 'toxicology',
+                'lumbar-puncture', 'cardiac-tests', 'sleep-study', 'autonomic-testing',
+                'psychiatric-interview', 'trauma-screening', 'depression-scale', 'anxiety-scale', 'neuropsych-testing'
+            ];
+            
+            let invCount = 0;
+            allInvestigations.forEach(inv => {
+                if (document.getElementById(inv) && document.getElementById(inv).checked) {
+                    invCount++;
+                    score += 3;
+                }
+            });
+            
+            if (invCount > 0) {
+                details.push(`${invCount}/${allInvestigations.length} investigations completed`);
+            }
+            
+            const primarySymptom = document.getElementById('fnd-primary-symptom').value;
+            if (primarySymptom) {
+                score += 10;
+                details.push(`Primary symptom: ${primarySymptom}`);
+            }
+            
+            displayResult('fnd-result', score, 'FND DIAGNOSTIC CONFIDENCE', details, 
+                score >= 80 ? 'High confidence FND diagnosis - comprehensive workup completed' : 
+                score >= 60 ? 'Moderate-high confidence - consider additional investigations' :
+                score >= 40 ? 'Moderate confidence - complete investigation workup needed' : 
+                'Low confidence - rule out organic causes first');
+        }
+
+        // Epilepsy Assessment Calculator
+        function calculateEpilepsyScore() {
+            if (!currentPatient.id) {
+                alert('Please register patient first!');
+                return;
+            }
+
+            let score = 0;
+            let details = [];
+            
+            const seizureType = document.getElementById('seizure-type').value;
+            if (seizureType) {
+                score += 15;
+                details.push(`Seizure type: ${seizureType}`);
+            }
+            
+            const features = ['aura', 'automatisms', 'tongue-bite', 'incontinence', 'postictal'];
+            let featuresCount = 0;
+            
+            features.forEach(feature => {
+                if (document.getElementById(feature).checked) {
+                    featuresCount++;
+                    score += 10;
+                }
+            });
+            
+            if (featuresCount > 0) {
+                details.push(`${featuresCount} typical seizure features present`);
+            }
+            
+            displayResult('epilepsy-result', score, 'EPILEPSY LIKELIHOOD', details,
+                score >= 70 ? 'High probability of epilepsy' :
+                score >= 40 ? 'Moderate probability - complete workup needed' :
+                'Low probability - consider alternatives');
+        }
+
+        // MS Assessment Calculator
+        function calculateMSScore() {
+            if (!currentPatient.id) {
+                alert('Please register patient first!');
+                return;
+            }
+
+            let score = 0;
+            let details = [];
+            
+            const course = document.getElementById('ms-course').value;
+            if (course) {
+                score += 10;
+                details.push(`Disease course: ${course}`);
+            }
+            
+            const symptoms = ['optic-neuritis', 'brainstem', 'spinal-symptoms', 'cerebellar', 'fatigue'];
+            let symptomsCount = 0;
+            
+            symptoms.forEach(symptom => {
+                if (document.getElementById(symptom).checked) {
+                    symptomsCount++;
+                    score += 12;
+                }
+            });
+            
+            if (symptomsCount > 0) {
+                details.push(`${symptomsCount} typical MS symptoms present`);
+            }
+            
+            displayResult('ms-result', score, 'MS DIAGNOSTIC PROBABILITY', details,
+                score >= 80 ? 'High probability - meets McDonald criteria' :
+                score >= 50 ? 'Moderate probability - complete MRI/CSF workup' :
+                'Low probability - consider alternatives');
+        }
+
+        // Parkinson's Assessment Calculator
+        function calculateParkinsonScore() {
+            if (!currentPatient.id) {
+                alert('Please register patient first!');
+                return;
+            }
+
+            let score = 0;
+            let details = [];
+            
+            const bradykinesia = document.getElementById('bradykinesia').value;
+            if (bradykinesia && bradykinesia > 0) {
+                score += parseInt(bradykinesia) * 15;
+                details.push(`Bradykinesia severity: ${bradykinesia}/4`);
+            }
+            
+            const cardinalFeatures = ['rest-tremor', 'rigidity', 'postural-instability', 'asymmetric'];
+            let cardinalCount = 0;
+            
+            cardinalFeatures.forEach(feature => {
+                if (document.getElementById(feature).checked) {
+                    cardinalCount++;
+                    score += 15;
+                }
+            });
+            
+            if (cardinalCount > 0) {
+                details.push(`${cardinalCount}/4 cardinal features present`);
+            }
+            
+            const levodopaResponse = document.getElementById('levodopa-response').value;
+            if (levodopaResponse === 'excellent') {
+                score += 25;
+                details.push('Excellent levodopa response');
+            } else if (levodopaResponse === 'good') {
+                score += 15;
+                details.push('Good levodopa response');
+            }
+            
+            displayResult('parkinson-result', score, 'PARKINSON\'S DISEASE LIKELIHOOD', details,
+                score >= 80 ? 'High probability of Parkinson\'s disease' :
+                score >= 50 ? 'Moderate probability - consider DaTscan' :
+                'Low probability - consider alternatives');
+        }
+
+        // NIHSS Calculator for Stroke
+        function calculateNIHSS() {
+            if (!currentPatient.id) {
+                alert('Please register patient first!');
+                return;
+            }
+
+            let nihssScore = 0;
+            let details = [];
+            
+            const components = ['loc', 'gaze', 'facial', 'motor-arm-left', 'motor-arm-right', 'motor-leg-left', 'motor-leg-right', 'language', 'dysarthria', 'extinction'];
+            
+            components.forEach(component => {
+                const element = document.getElementById(component);
+                if (element) {
+                    const value = parseInt(element.value) || 0;
+                    nihssScore += value;
+                }
+            });
+            
+            details.push(`Total NIHSS Score: ${nihssScore}/42`);
+            
+            const onsetTime = new Date(document.getElementById('symptom-onset').value);
+            const arrivalTime = new Date(document.getElementById('hospital-arrival').value);
+            
+            if (onsetTime && arrivalTime) {
+                const timeDiff = (arrivalTime - onsetTime) / (1000 * 60);
+                const hours = Math.floor(timeDiff / 60);
+                const minutes = Math.floor(timeDiff % 60);
+                
+                details.push(`Time from onset: ${hours}h ${minutes}m`);
+                
+                if (timeDiff <= 270) {
+                    details.push('⚠️ WITHIN tPA WINDOW - Consider thrombolysis');
+                } else if (timeDiff <= 360) {
+                    details.push('⚠️ WITHIN thrombectomy window - Consider mechanical intervention');
+                } else if (timeDiff <= 1440) {
+                    details.push('⚠️ Consider extended window therapies');
+                } else {
+                    details.push('❌ Outside acute treatment windows');
+                }
+            }
+            
+            // Count completed investigations
+            const investigations = [
+                'ct-head-stroke', 'ct-angio', 'ct-perfusion', 'mri-stroke', 'mra',
+                'glucose-stroke', 'coag', 'platelets', 'troponin', 'lipids', 'hba1c',
+                'ecg-stroke', 'echo-stroke', 'holter', 'tee',
+                'carotid', 'tcd', 'vertebral'
+            ];
+            
+            let invCount = 0;
+            investigations.forEach(inv => {
+                if (document.getElementById(inv) && document.getElementById(inv).checked) {
+                    invCount++;
+                }
+            });
+            
+            if (invCount > 0) {
+                details.push(`${invCount}/${investigations.length} investigations completed`);
+            }
+            
+            let severity = nihssScore <= 4 ? 'Minor stroke' : 
+                          nihssScore <= 15 ? 'Moderate stroke' : 
+                          nihssScore <= 25 ? 'Severe stroke' : 
+                          'Very severe stroke';
+            
+            displayResult('stroke-result', nihssScore, 'NIHSS STROKE ASSESSMENT', details, severity);
+        }
+
+        // Display results function
+        function displayResult(elementId, score, title, details, interpretation) {
+            const resultDiv = document.getElementById(elementId);
+            
+            let html = `
+                <div class="score-display">
+                    <h3>${title}</h3>
+                    <div style="font-size: 28px; margin: 15px 0;">SCORE: ${score}</div>
+                    <div style="margin: 15px 0; font-size: 18px;"><strong>${interpretation}</strong></div>
+                    <div style="margin-top: 20px; text-align: left; font-size: 14px;">
+                        <strong>Patient:</strong> ${currentPatient.name} (${currentPatient.id})<br>
+                        <strong>Assessment Date:</strong> ${currentPatient.assessmentDate}<br><br>
+                        <strong>Assessment Details:</strong><br>
+            `;
+            
+            details.forEach(detail => {
+                html += `• ${detail}<br>`;
+            });
+            
+            html += `
+                    </div>
+                    <button class="btn btn-success" onclick="printResult('${elementId}')">Print Report</button>
+                </div>
+            `;
+            
+            resultDiv.innerHTML = html;
+        }
+
+        // Print function
+        function printResult(elementId) {
+            const printContent = document.getElementById(elementId).innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div style="padding: 20px; font-family: Arial, sans-serif;">
+                    <h1>Neuro-Diagnostic System Report</h1>
+                    ${printContent}
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            
+            // Re-initialize after printing
+            document.getElementById('assessmentDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        // Initialize speech recognition on load
+        window.onload = function() {
+            initializeSpeechRecognition();
+        };
+    </script>
+</body>
+</html>
