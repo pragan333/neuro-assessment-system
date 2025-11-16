@@ -1,0 +1,252 @@
+{
+  "pageSize": "A4",
+  "pageMargins": [40, 60, 40, 60],
+  "content": [
+    {
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgD8W/8kAAAAASUVORK5CYII=",
+      "width": 80,
+      "alignment": "center",
+      "margin": [0, 0, 0, 10]
+    },
+    {
+      "text": "PRE-OWNED ULTRASOUND SALES PROPOSAL",
+      "style": "header",
+      "alignment": "center"
+    },
+    {
+      "text": "Philips iU22 xMATRIX – OB/GYN Focused Configuration",
+      "style": "subheader",
+      "alignment": "center",
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "columns": [
+        {
+          "width": "50%",
+          "text": [
+            { "text": "Proposal Ref: ", "bold": true },
+            "iU22-PreOwned-OB-2025\n",
+            { "text": "Date: ", "bold": true },
+            "November 16, 2025\n",
+            { "text": "Valid Till: ", "bold": true },
+            "November 30, 2025\n",
+            { "text": "Prepared By: ", "bold": true },
+            "@Chandrubmec (Authorized 3rd Party Supplier)\n",
+            { "text": "Contact: ", "bold": true },
+            "+91-XXXXX-XXXXX | sales@chandrubmec.com"
+          ],
+          "fontSize": 10
+        },
+        {
+          "width": "50%",
+          "text": [
+            { "text": "Client: ", "bold": true },
+            "[Hospital / Radiology Dept]\n",
+            { "text": "Tender: ", "bold": true },
+            "General Radiology USG – OB Focused\n",
+            { "text": "Committed Modalities: ", "bold": true },
+            "Convex 2D | Convex 4D | Linear 2D | Transvaginal 2D"
+          ],
+          "fontSize": 10,
+          "alignment": "right"
+        }
+      ],
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "EXECUTIVE OFFER SUMMARY",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 10]
+    },
+    {
+      "ul": [
+        "Fully refurbished pre-owned Philips iU22 xMATRIX system (OEM-standard reconditioning)",
+        "Includes 4 OB/GYN-optimized probes from your inventory: C5-1, V6-2, L17-5, 3D9-3V",
+        "Base Price: ₹9,50,000 + GST",
+        "Special 10% Discount Applied: ₹95,000 OFF",
+        "Final System Price: ₹8,55,000 + GST",
+        "Extended Warranty: 12 Months Comprehensive (Parts + Labor + On-site)",
+        "Free Installation + 1-Day OB/GYN Training Included"
+      ],
+      "margin": [0, 0, 0, 20],
+      "fontSize": 11
+    },
+
+    {
+      "text": "SYSTEM & PROBE CONFIGURATION",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 8]
+    },
+    {
+      "table": {
+        "headerRows": 1,
+        "widths": ["22%", "22%", "18%", "18%", "20%"],
+        "body": [
+          [
+            { "text": "Item", "style": "tableHeader" },
+            { "text": "Model / Part No.", "style": "tableHeader" },
+            { "text": "Type", "style": "tableHeader" },
+            { "text": "Frequency", "style": "tableHeader" },
+            { "text": "Status", "style": "tableHeader" }
+          ],
+          ["Philips iU22 System", "4535-610-10031", "xMATRIX Cart", "Shared Service", "Refurbished"],
+          ["C5-1 Probe", "4535-616-299", "Convex 2D", "1–5 MHz", "Refurbished"],
+          ["V6-2 Probe", "98960-539-563", "Convex 4D", "1.9–6.2 MHz", "Refurbished"],
+          ["L17-5 Probe", "4535-118-975", "Linear 2D", "5–17 MHz", "Refurbished"],
+          ["3D9-3V Probe", "4000-0932", "Transvaginal 2D", "3–9 MHz", "Refurbished"]
+        ]
+      },
+      "layout": "lightHorizontalLines",
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "PRICING BREAKDOWN (ALL PRICES IN INR)",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 8]
+    },
+    {
+      "table": {
+        "headerRows": 1,
+        "widths": ["*", "25%", "25%"],
+        "body": [
+          [
+            { "text": "Description", "style": "tableHeader" },
+            { "text": "Amount (₹)", "style": "tableHeader", "alignment": "right" },
+            { "text": "Total (₹)", "style": "tableHeader", "alignment": "right" }
+          ],
+          ["System + 4 Probes (Base)", "", "9,50,000"],
+          ["10% Loyalty Discount", "", "(95,000)"],
+          ["Subtotal (excl. GST)", "", "8,55,000"],
+          ["CGST @9% + SGST @9%", "", "1,53,900"],
+          ["Final Total (incl. GST)", "", "10,08,900"]
+        ]
+      },
+      "layout": "lightHorizontalLines",
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "WARRANTY & SUPPORT TERMS",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 8]
+    },
+    {
+      "ul": [
+        "12-Month Comprehensive Warranty (covers parts, labor, on-site service)",
+        "Probe crystal dropout <2% guaranteed at delivery",
+        "Free installation within 7 days of delivery",
+        "1-day hands-on OB/GYN training for 2 operators",
+        "Remote diagnostics + priority service response (<48 hrs)",
+        "Extendable warranty: Year 2 @ ₹75,000 | Year 3 @ ₹60,000"
+      ],
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "KEY FEATURES OF PHILIPS iU22 (30+ HIGHLIGHTS)",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 8]
+    },
+    {
+      "ol": [
+        "xMATRIX platform with real-time 3D/4D volume imaging",
+        "PureWave transducers (all 4 probes) – 69% better penetration",
+        "C5-1: 166° FOV, ideal for deep OB/abdominal scans",
+        "V6-2: Live 4D with RealVue, STIC, Surface Render",
+        "L17-5: 38 mm high-res linear for vascular & superficial",
+        "3D9-3V: 164° endocavitary FOV, early OB/GYN",
+        "17\" LCD anti-glare monitor, split-screen 2D/3D",
+        "SmartExam: 50% faster OB protocols",
+        "QLAB: Fetal biometry, ROI, vascular quantification",
+        "SonoCT compound imaging (9 lines)",
+        "XRES adaptive noise reduction",
+        "Live 3D/4D up to 28 volumes/sec",
+        "Color, Power, PW, CW Doppler",
+        "Tissue Harmonic Imaging (THI)",
+        "Panoramic extended FOV",
+        "DICOM 3.0 SR/MWL/Store",
+        "USB, Ethernet, Hindi interface",
+        "Auto TGC, gain, frequency optimization",
+        "WHO/Indian fetal growth charts",
+        "Anomaly scan structured reporting",
+        "High PRF for arterial studies",
+        "Contrast & Elastography ready",
+        "Ergonomic cart, 4 active probe ports",
+        "Battery backup compatible",
+        "Refurbished with OEM parts & software (Rev. F+)",
+        "100+ point functional test passed",
+        "Crystal dropout <2% on all probes",
+        "Calibration certificate included",
+        "Service log & user manual (PDF)",
+        "Nationwide service network"
+      ],
+      "type": "decimal",
+      "fontSize": 10,
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "PAYMENT & DELIVERY TERMS",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 8]
+    },
+    {
+      "ul": [
+        "Payment: 50% advance, 50% on delivery",
+        "Delivery: 7–10 days from PO",
+        "FOB: Your facility (PAN India)",
+        "GST Invoice with HSN: 9018",
+        "Tender-compliant documentation included"
+      ],
+      "margin": [0, 0, 0, 20]
+    },
+
+    {
+      "text": "ACCEPTANCE & AUTHORIZATION",
+      "style": "sectionHeader",
+      "margin": [0, 0, 0, 10]
+    },
+    {
+      "columns": [
+        {
+          "width": "50%",
+          "text": [
+            "___________________________\n",
+            "Client Signature\n",
+            "Name: ____________________\n",
+            "Date: _____________________\n",
+            "Seal:"
+          ]
+        },
+        {
+          "width": "50%",
+          "text": [
+            "___________________________\n",
+            "@Chandrubmec\n",
+            "Authorized Signatory\n",
+            "Date: November 16, 2025\n",
+            "Company Seal:"
+          ]
+        }
+      ]
+    },
+
+    {
+      "text": "Thank you for trusting @Chandrubmec – Delivering Quality Pre-Owned Ultrasound Solutions Across India",
+      "alignment": "center",
+      "italic": true,
+      "fontSize": 9,
+      "margin": [0, 30, 0, 0]
+    }
+  ],
+  "styles": {
+    "header": { "fontSize": 16, "bold": true, "color": "#1B4F72" },
+    "subheader": { "fontSize": 13, "bold": true, "color": "#2874A6" },
+    "sectionHeader": { "fontSize": 12, "bold": true, "color": "#1B4F72", "decoration": "underline" },
+    "tableHeader": { "fillColor": "#1B4F72", "color": "white", "bold": true, "fontSize": 10 }
+  },
+  "defaultStyle": { "fontSize": 11, "font": "Roboto" }
+}
