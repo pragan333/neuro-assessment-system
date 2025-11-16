@@ -1,0 +1,22 @@
+{
+  "name": "ultrasound-proposal-generator",
+  "version": "1.0.0",
+  "description": "PDF generator for pre-owned ultrasound sales proposals",
+  "main": "generate-pdf.js",
+  "scripts": {
+    "generate": "node generate-pdf.js",
+    "test": "node generate-pdf.js"
+  },
+  "keywords": [
+    "pdf",
+    "pdfmake",
+    "ultrasound",
+    "sales",
+    "proposal"
+  ],
+  "author": "@Chandrubmec",
+  "license": "MIT",
+  "dependencies": {
+    "pdfmake": "^0.2.9"
+  }
+}
