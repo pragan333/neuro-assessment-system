@@ -9,13 +9,16 @@ const fs = require('fs');
 const path = require('path');
 const PdfPrinter = require('pdfmake');
 
+// Load fonts from pdfmake's virtual file system
+const pdfFonts = require('pdfmake/build/vfs_fonts.js');
+
 // Define fonts
 const fonts = {
   Roboto: {
-    normal: 'node_modules/pdfmake/build/vfs_fonts.js',
-    bold: 'node_modules/pdfmake/build/vfs_fonts.js',
-    italics: 'node_modules/pdfmake/build/vfs_fonts.js',
-    bolditalics: 'node_modules/pdfmake/build/vfs_fonts.js'
+    normal: Buffer.from(pdfFonts['Roboto-Regular.ttf'], 'base64'),
+    bold: Buffer.from(pdfFonts['Roboto-Medium.ttf'], 'base64'),
+    italics: Buffer.from(pdfFonts['Roboto-Italic.ttf'], 'base64'),
+    bolditalics: Buffer.from(pdfFonts['Roboto-MediumItalic.ttf'], 'base64')
   }
 };
 
