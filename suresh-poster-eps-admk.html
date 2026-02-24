@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suresh G - EPS ADMK Poster</title>
+    <style>
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* ===== Poster Container ===== */
+        .poster {
+            width: 800px;
+            max-width: 100%;
+            background: linear-gradient(135deg, #000000 0%, #1a0a2e 30%, #0d0d3b 60%, #000000 100%);
+            border: 6px solid #d4af37;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.3), 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        /* ===== Decorative Top Banner ===== */
+        .top-banner {
+            background: linear-gradient(90deg, #d4af37, #f5d76e, #d4af37);
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .top-banner .party-symbol {
+            font-size: 28px;
+            font-weight: 900;
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
+        }
+
+        .top-banner .party-name-banner {
+            font-size: 16px;
+            font-weight: 800;
+            color: #1a0a2e;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== Party Header ===== */
+        .party-header {
+            background: linear-gradient(180deg, rgba(212,175,55,0.15) 0%, transparent 100%);
+            text-align: center;
+            padding: 25px 20px 15px;
+        }
+
+        .party-name-tamil {
+            font-size: 28px;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 0 0 20px rgba(212,175,55,0.5);
+            letter-spacing: 3px;
+            margin-bottom: 5px;
+        }
+
+        .party-name-english {
+            font-size: 14px;
+            font-weight: 600;
+            color: #c0a030;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        /* ===== Two Leaves Symbol ===== */
+        .symbol-section {
+            text-align: center;
+            padding: 10px;
+        }
+
+        .two-leaves {
+            display: inline-block;
+            position: relative;
+            width: 100px;
+            height: 80px;
+        }
+
+        .leaf {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            border-radius: 50% 0 50% 0;
+            top: 10px;
+        }
+
+        .leaf-left {
+            background: linear-gradient(135deg, #2d8a2d, #4caf50, #2d8a2d);
+            left: 12px;
+            transform: rotate(-20deg);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .leaf-right {
+            background: linear-gradient(225deg, #2d8a2d, #4caf50, #2d8a2d);
+            right: 12px;
+            transform: rotate(20deg) scaleX(-1);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+        }
+
+        .leaf-vein {
+            position: absolute;
+            width: 2px;
+            height: 45px;
+            background: rgba(255,255,255,0.3);
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+
+        .stem {
+            position: absolute;
+            width: 4px;
+            height: 25px;
+            background: linear-gradient(to bottom, #4caf50, #2d6a2d);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        /* ===== Leader Section ===== */
+        .leader-section {
+            text-align: center;
+            padding: 20px 30px;
+            position: relative;
+        }
+
+        .leader-frame {
+            display: inline-block;
+            padding: 6px;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #f5d76e, #d4af37);
+            box-shadow: 0 0 30px rgba(212,175,55,0.4);
+            margin-bottom: 15px;
+        }
+
+        .leader-photo-placeholder {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a5a, #1a1a3a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            font-size: 14px;
+            font-weight: 600;
+            border: 2px solid #3a3a6a;
+        }
+
+        .leader-photo-placeholder .initials {
+            font-size: 48px;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212,175,55,0.5);
+        }
+
+        .leader-title {
+            font-size: 14px;
+            color: #f5d76e;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .leader-name {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+            margin-bottom: 5px;
+        }
+
+        .leader-name-tamil {
+            font-size: 26px;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 0 0 15px rgba(212,175,55,0.4);
+            margin-bottom: 5px;
+        }
+
+        .leader-designation {
+            font-size: 13px;
+            color: #c0c0c0;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* ===== Greeting Message ===== */
+        .greeting-section {
+            background: linear-gradient(180deg, transparent, rgba(212,175,55,0.08), transparent);
+            padding: 25px 40px;
+            text-align: center;
+        }
+
+        .greeting-title-tamil {
+            font-size: 22px;
+            font-weight: 800;
+            color: #f5d76e;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(245,215,110,0.3);
+        }
+
+        .greeting-message {
+            font-size: 16px;
+            color: #e0e0e0;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 15px;
+        }
+
+        .greeting-message-tamil {
+            font-size: 18px;
+            color: #e8d5a3;
+            line-height: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ===== Decorative Divider ===== */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 40px;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+        }
+
+        .divider-diamond {
+            width: 12px;
+            height: 12px;
+            background: #d4af37;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px rgba(212,175,55,0.5);
+        }
+
+        /* ===== Poster Creator Section ===== */
+        .creator-section {
+            text-align: center;
+            padding: 20px 30px;
+        }
+
+        .creator-frame {
+            display: inline-block;
+            padding: 4px;
+            border: 2px solid #d4af37;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d4af37, #f5d76e, #d4af37);
+            margin-bottom: 10px;
+        }
+
+        .creator-photo-placeholder {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2a2a5a, #1a1a3a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #d4af37;
+            border: 2px solid #3a3a6a;
+        }
+
+        .creator-photo-placeholder .initials {
+            font-size: 32px;
+            font-weight: 900;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212,175,55,0.5);
+        }
+
+        .creator-label {
+            font-size: 12px;
+            color: #c0a030;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .creator-name {
+            font-size: 24px;
+            font-weight: 900;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(255,255,255,0.2);
+            margin-bottom: 3px;
+        }
+
+        .creator-name-tamil {
+            font-size: 20px;
+            font-weight: 800;
+            color: #d4af37;
+            margin-bottom: 5px;
+        }
+
+        .creator-designation {
+            font-size: 13px;
+            color: #b0b0b0;
+            font-weight: 500;
+        }
+
+        /* ===== Bottom Banner ===== */
+        .bottom-banner {
+            background: linear-gradient(90deg, #d4af37, #f5d76e, #d4af37);
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        .bottom-banner .slogan {
+            font-size: 16px;
+            font-weight: 900;
+            color: #1a0a2e;
+            letter-spacing: 2px;
+        }
+
+        .bottom-banner .slogan-english {
+            font-size: 11px;
+            font-weight: 700;
+            color: #3a2a4e;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        /* ===== Flag Colors Accent ===== */
+        .flag-accent {
+            display: flex;
+            height: 6px;
+        }
+
+        .flag-accent .red { flex: 1; background: #e53935; }
+        .flag-accent .black { flex: 1; background: #212121; }
+
+        /* ===== Corner Decorations ===== */
+        .poster::before,
+        .poster::after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(212,175,55,0.3);
+            pointer-events: none;
+        }
+
+        .poster::before {
+            top: 15px;
+            left: 15px;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 8px 0 0 0;
+        }
+
+        .poster::after {
+            top: 15px;
+            right: 15px;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 8px 0 0;
+        }
+
+        /* ===== Sparkle / Decorative Dots ===== */
+        .sparkle-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d4af37;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: twinkle 3s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* ===== Print / Download Button ===== */
+        .controls {
+            margin-top: 25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 15px;
+            font-weight: 700;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+        }
+
+        .btn-print {
+            background: linear-gradient(135deg, #d4af37, #f5d76e);
+            color: #1a0a2e;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(212,175,55,0.4);
+        }
+
+        .btn-download {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        .btn-download:hover {
+            background: rgba(212,175,55,0.1);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .poster { border-width: 4px; }
+            .party-name-tamil { font-size: 20px; }
+            .leader-name { font-size: 24px; }
+            .leader-name-tamil { font-size: 20px; }
+            .greeting-section { padding: 20px 20px; }
+            .greeting-title-tamil { font-size: 18px; }
+            .greeting-message-tamil { font-size: 16px; }
+            .creator-name { font-size: 20px; }
+        }
+
+        /* ===== Print Styles ===== */
+        @media print {
+            body { background: white; padding: 0; }
+            .controls { display: none; }
+            .poster {
+                box-shadow: none;
+                border-radius: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="poster" id="poster">
+    <!-- Sparkle Decorations -->
+    <div class="sparkle-container" id="sparkles"></div>
+
+    <!-- Flag Colors Accent Top -->
+    <div class="flag-accent">
+        <div class="red"></div>
+        <div class="black"></div>
+    </div>
+
+    <!-- Top Gold Banner -->
+    <div class="top-banner">
+        <span class="party-symbol">&#127807;</span>
+        <span class="party-name-banner">AIADMK</span>
+        <span class="party-symbol">&#127807;</span>
+    </div>
+
+    <!-- Party Header -->
+    <div class="party-header">
+        <div class="party-name-tamil">அ.இ.அ.தி.மு.க</div>
+        <div class="party-name-english">All India Anna Dravida Munnetra Kazhagam</div>
+    </div>
+
+    <!-- Two Leaves Symbol -->
+    <div class="symbol-section">
+        <div class="two-leaves">
+            <div class="leaf leaf-left">
+                <div class="leaf-vein"></div>
+            </div>
+            <div class="leaf leaf-right">
+                <div class="leaf-vein"></div>
+            </div>
+            <div class="stem"></div>
+        </div>
+    </div>
+
+    <!-- Leader Section -->
+    <div class="leader-section">
+        <div class="leader-title">Our Beloved Leader</div>
+        <div class="leader-frame">
+            <div class="leader-photo-placeholder">
+                <span class="initials">EPS</span>
+            </div>
+        </div>
+        <div class="leader-name-tamil">எடப்பாடி கே. பழனிசாமி</div>
+        <div class="leader-name">Edappadi K. Palaniswami</div>
+        <div class="leader-designation">General Secretary, AIADMK</div>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- Greeting Message -->
+    <div class="greeting-section">
+        <div class="greeting-title-tamil">வாழ்த்துச் செய்தி</div>
+        <div class="greeting-message-tamil">
+            எங்கள் அன்பிற்குரிய தலைவர்<br>
+            <strong>எடப்பாடி கே. பழனிசாமி</strong> அவர்களுக்கு<br>
+            மனமார்ந்த வாழ்த்துக்கள்!<br><br>
+            தங்களின் தலைமையில்<br>
+            அ.இ.அ.தி.மு.க மேலும் வலிமை பெற்று<br>
+            தமிழகத்தின் வளர்ச்சிக்காக பாடுபட<br>
+            இறைவனை வேண்டுகிறோம்!<br><br>
+            <em>இரட்டை இலை வெல்லும்!</em>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- Creator / Suresh G Section -->
+    <div class="creator-section">
+        <div class="creator-label">With Regards</div>
+        <div class="creator-frame">
+            <div class="creator-photo-placeholder">
+                <span class="initials">SG</span>
+            </div>
+        </div>
+        <div class="creator-name-tamil">சுரேஷ் ஜி</div>
+        <div class="creator-name">Suresh G</div>
+        <div class="creator-designation">Loyal Party Worker | AIADMK</div>
+    </div>
+
+    <!-- Bottom Gold Banner -->
+    <div class="bottom-banner">
+        <div class="slogan">இரட்டை இலை வெல்லும்!</div>
+        <div class="slogan-english">Two Leaves Shall Triumph</div>
+    </div>
+
+    <!-- Flag Colors Accent Bottom -->
+    <div class="flag-accent">
+        <div class="black"></div>
+        <div class="red"></div>
+    </div>
+</div>
+
+<!-- Controls -->
+<div class="controls">
+    <button class="btn btn-print" onclick="window.print()">Print Poster</button>
+    <button class="btn btn-download" onclick="downloadPoster()">Download as Image</button>
+</div>
+
+<script>
+    // Generate sparkle decorations
+    (function generateSparkles() {
+        const container = document.getElementById('sparkles');
+        const count = 30;
+        for (let i = 0; i < count; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            sparkle.style.animationDelay = (Math.random() * 3) + 's';
+            sparkle.style.animationDuration = (2 + Math.random() * 3) + 's';
+            container.appendChild(sparkle);
+        }
+    })();
+
+    // Download poster as image using canvas
+    function downloadPoster() {
+        const poster = document.getElementById('poster');
+        // Use html2canvas if available, otherwise fallback to print
+        if (typeof html2canvas !== 'undefined') {
+            html2canvas(poster, { scale: 2, useCORS: true }).then(function(canvas) {
+                const link = document.createElement('a');
+                link.download = 'Suresh_G_EPS_ADMK_Poster.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        } else {
+            // Dynamically load html2canvas
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+            script.onload = function() {
+                html2canvas(poster, { scale: 2, useCORS: true }).then(function(canvas) {
+                    const link = document.createElement('a');
+                    link.download = 'Suresh_G_EPS_ADMK_Poster.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            };
+            document.head.appendChild(script);
+        }
+    }
+</script>
+
+</body>
+</html>
