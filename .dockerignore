@@ -1,0 +1,13 @@
+.git
+.github
+.claude
+node_modules
+test
+scripts
+ultrasound-proposal-generator
+*.md
+Pydoc
+suresh-poster-eps-admk.html
+neuro_assessment_system.html
+docker-compose.yml
+Dockerfile
