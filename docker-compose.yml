@@ -1,0 +1,16 @@
+services:
+  neuro-assessment:
+    build: .
+    image: neuro-assessment-system:2.2.0
+    container_name: neuro-assessment
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      LOG_REQUESTS: "true"
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

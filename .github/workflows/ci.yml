@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Pre-deploy checks
+        run: npm run check
+      - name: Unit and server tests
+        run: npm test
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t neuro-assessment-system:ci .
+      - name: Smoke test container
+        run: |
+          docker run -d --name neuro -p 8080:8080 neuro-assessment-system:ci
+          for i in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8080/healthz; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8080/ | grep -q "NEURO-DIAGNOSTIC SYSTEM"
+          curl -fsSI http://127.0.0.1:8080/ | grep -qi "content-security-policy"
+      - name: Container logs
+        if: always()
+        run: docker logs neuro || true

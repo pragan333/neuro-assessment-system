@@ -1,4 +1,4 @@
-# Neuro Assessment System v2.1
+# Neuro Assessment System v2.2
 
 A comprehensive web-based neurological assessment platform designed for healthcare professionals to perform structured evaluations of major neurological conditions.
 
@@ -27,17 +27,52 @@ The Neuro Assessment System is an advanced diagnostic support tool that provides
 
 ## 🚀 Quick Start
 
-1. Open `neuro_assessment_system.html` in a modern web browser.
-2. Register a new patient using the **Patient Registration** tab.
-3. Select the appropriate diagnostic module.
-4. Complete assessment fields as per clinical findings.
-5. Generate and print the diagnostic report.
+### Run locally
+
+```bash
+npm start                # http://localhost:8080  (Node.js 18+, no npm install needed)
+```
+
+Or open `public/index.html` directly in a browser.
+
+### Deploy
+
+```bash
+npm run verify           # pre-deploy checks + 27 tests
+docker compose up -d --build
+```
+
+For Docker, Vercel, Node hosts, static hosting, HTTPS and the release checklist, see **[DEPLOY.md](DEPLOY.md)**.
+
+### Use
+
+1. Register a new patient using the **Patient Registration** tab.
+2. Select the appropriate diagnostic module (deep links work, e.g. `/#stroke`).
+3. Complete the assessment fields according to the clinical findings.
+4. Calculate, then print the diagnostic report.
+
+## 📁 Project Structure
+
+```
+public/                 Static web app (deployable as-is)
+  index.html
+  css/styles.css
+  js/scoring.js         Pure scoring rules (unit tested)
+  js/app.js             UI wiring
+  sw.js                 Offline cache
+  manifest.webmanifest  Installable app manifest
+server.js               Production server (0 runtime dependencies)
+test/                   node:test unit and server tests
+scripts/check.js        Pre-deploy validation
+Dockerfile, docker-compose.yml, vercel.json, .github/workflows/ci.yml
+```
 
 ## 🔧 System Requirements
 
 - Modern web browser with JavaScript enabled
-- For voice input: browser with Web Speech API support (recommended: Chrome, Edge)
-- Internet connection not required for core usage (offline-capable)
+- For voice input: a browser with Web Speech API support (Chrome or Edge recommended), served over HTTPS or localhost
+- Server: Node.js 18 or later, or Docker
+- After the first visit, the app works offline (service worker)
 
 ## 🏥 Clinical Applications
 
@@ -53,7 +88,7 @@ This system is designed for use by:
 Each module uses established clinical frameworks:
 - **FND**: Confidence-oriented scoring using functional signs and investigations
 - **Parkinson's**: UPDRS-oriented likelihood assessment
-- **Stroke**: NIHSS-based severity scoring with treatment-window support
+- **Stroke**: full 15-item NIHSS (0-42) with standard severity bands and treatment-window support
 - **MS**: McDonald criteria-oriented workflow
 - **Epilepsy**: ILAE-aligned classification support
 
@@ -70,8 +105,7 @@ You are responsible for ensuring compliance with applicable healthcare and priva
 
 ## 📝 Versioning
 
-Current documentation version: **v2.1**
-For code-level changes, maintain a `CHANGELOG.md` or GitHub Releases for traceable version history.
+Current version: **v2.2.0**. See [CHANGELOG.md](CHANGELOG.md).
 
 ## 📄 License / Usage Notice
 
