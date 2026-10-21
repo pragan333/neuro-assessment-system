@@ -103,3 +103,13 @@ test('non-GET methods are rejected', async () => {
     assert.equal(res.status, 405);
     assert.equal(res.headers.allow, 'GET, HEAD');
 });
+
+test('vercel.json sends the same security headers as server.js and serves public/', () => {
+    const { SECURITY_HEADERS } = require('../server.js');
+    const vercel = require('../vercel.json');
+    assert.equal(vercel.outputDirectory, 'public');
+    assert.equal(vercel.buildCommand, 'npm run build');
+    const global = vercel.headers.find(rule => rule.source === '/(.*)');
+    const sent = Object.fromEntries(global.headers.map(h => [h.key, h.value]));
+    assert.deepEqual(sent, SECURITY_HEADERS);
+});

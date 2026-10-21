@@ -9,7 +9,8 @@ Deploy-ready release.
 - Dockerfile (non-root, health check), `docker-compose.yml` (read-only filesystem, all capabilities dropped).
 - GitHub Actions CI: pre-deploy checks and tests on Node 20 and 22, Docker build plus container smoke test.
 - Offline support (service worker) and an installable web app manifest.
-- `npm run check` pre-deploy validation, plus 26 unit and server tests (`npm test`).
+- `vercel.json` (build command, `public` output folder, security headers) and an `npm run build` script, so Vercel deploys work regardless of dashboard settings.
+- `npm run check` pre-deploy validation, plus 27 unit and server tests (`npm test`).
 - Deep links to modules (`/#stroke`, `/#fnd`, ...).
 - Clinical safety notice on every screen.
 

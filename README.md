@@ -38,11 +38,11 @@ Or open `public/index.html` directly in a browser.
 ### Deploy
 
 ```bash
-npm run verify           # pre-deploy checks + 26 tests
+npm run verify           # pre-deploy checks + 27 tests
 docker compose up -d --build
 ```
 
-For Docker, Node hosts, static hosting, HTTPS and the release checklist, see **[DEPLOY.md](DEPLOY.md)**.
+For Docker, Vercel, Node hosts, static hosting, HTTPS and the release checklist, see **[DEPLOY.md](DEPLOY.md)**.
 
 ### Use
 
@@ -64,7 +64,7 @@ public/                 Static web app (deployable as-is)
 server.js               Production server (0 runtime dependencies)
 test/                   node:test unit and server tests
 scripts/check.js        Pre-deploy validation
-Dockerfile, docker-compose.yml, .github/workflows/ci.yml
+Dockerfile, docker-compose.yml, vercel.json, .github/workflows/ci.yml
 ```
 
 ## 🔧 System Requirements

@@ -5,7 +5,7 @@ The app is a static, client-side web app. Patient data never leaves the browser.
 ## 1. Pre-flight (always run before deploying)
 
 ```bash
-npm run verify      # pre-deploy checks + 26 tests
+npm run verify      # pre-deploy checks + 27 tests
 ```
 
 Requirements: Node.js 18 or later (CI tests Node 20 and 22). No `npm install` is needed.
@@ -68,13 +68,23 @@ WantedBy=multi-user.target
 sudo systemctl daemon-reload && sudo systemctl enable --now neuro-assessment
 ```
 
-### Option C - Static hosting (GitHub Pages, Netlify, Cloudflare Pages, S3, nginx)
+### Option C - Vercel
+
+The repository includes a `vercel.json`. Import the repo into Vercel and deploy; no settings are needed. `vercel.json` sets:
+
+- Build Command: `npm run build` (runs the pre-deploy check)
+- Output Directory: `public`
+- The same security headers as `server.js` (a test keeps the 2 in sync)
+
+These values take precedence over the project's dashboard settings.
+
+### Option D - Other static hosting (GitHub Pages, Netlify, Cloudflare Pages, S3, nginx)
 
 Publish the `public/` folder as-is. No build step is needed.
 
 Static hosts do not send the security headers that `server.js` adds. If your host supports custom headers, copy them from `SECURITY_HEADERS` in `server.js`. The most important one is the `Content-Security-Policy`.
 
-### Option D - Offline / single machine
+### Option E - Offline / single machine
 
 Open `public/index.html` directly in Chrome or Edge. Everything works except the service worker, which needs `http(s)://`.
 
